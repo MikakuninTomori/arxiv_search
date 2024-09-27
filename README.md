@@ -13,6 +13,7 @@ Cloud Scheduler で定期的にエンドポイントを呼び出すように設�
 # 仕様
 呼び出されるたびにキーワードの中からランダムに３つ選択し、論文を探します。
 cs(Computer Science).AIから探索し、見つからない場合はarXivのcsジャンルを全て探索します。必要なジャンルだけを追加してください。ジャンルに関しては以下を参考にしてください。
+
 https://arxiv.org/category_taxonomy
 GPTは3.5-turboを使用します。
 
