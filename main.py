@@ -161,12 +161,17 @@ def slack_events():
 # 実行　
 @app.route('/run', methods=['GET'])
 def run_process_arxiv_search():
-    paper = set()
     # ランダムで3つのキーワードを抽出して検索を行う
-    random_keyword = random.sample(keyword_list, 3)
-    for keyword in random_keyword:
-        paper = process_arxiv_search(keyword, paper)
-    return jsonify({'status': 'process_arxiv_search completed'}), 200
+    def background_task():
+        paper = set()
+        random_keyword = random.sample(keyword_list, 3)
+        for keyword in random_keyword:
+            paper = process_arxiv_search(keyword, paper)
+    # threadingでイベントを処理
+    threading.Thread(target=background_task).start()
+   
+    # 即座にHTTP 200レスポンスを返す
+    return jsonify({'status': 'process_arxiv_search started'}), 200
 
 if __name__ == '__main__':
     port = 8080
